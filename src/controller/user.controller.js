@@ -1,16 +1,18 @@
 const { getAllData, getDataById, createUser, updateUser, deleteUser } = require('../service/user.service');
 const { buildResponse } = require('../helper/buildResponse');
+const { isValidId } = require('../helper/validation');
 const route = require('express').Router();
 
 route.get('/', async (_req, res) => {
   try {
     const data = await getAllData();
+
     buildResponse(res, 200, data);
   } catch (error) {
     buildResponse(res, 404, error.message);
   }
 });
-route.get('/:id', async (req, res) => {
+route.get('/:id', isValidId, async (req, res) => {
   try {
     const { id } = req.params;
     const data = await getDataById(id);
@@ -29,7 +31,7 @@ route.post('/', async (req, res) => {
     buildResponse(res, 404, er.message);
   }
 });
-route.put('/:id', async (req, res) => {
+route.put('/:id', isValidId, async (req, res) => {
   try {
     const { id } = req.params;
     const { name, surname, email, pwd } = req.body;
@@ -39,7 +41,7 @@ route.put('/:id', async (req, res) => {
     buildResponse(res, 404, error.message);
   }
 });
-route.delete('/:id', async (req, res) => {
+route.delete('/:id', isValidId, async (req, res) => {
   try {
     const { id } = req.params;
     const data = await deleteUser(id);
