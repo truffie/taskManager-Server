@@ -7,7 +7,7 @@ const routeTask = require('./controller/task.controller');
 app.use(bp.json());
 
 app.use('/user', routeUser);
-app.use('/task', routeTask);
+app.use('/tasks', routeTask);
 
 
 app.use((error, _req, res, _next) => {
