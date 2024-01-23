@@ -15,7 +15,7 @@ const getTaskByIdDB = async (id) => {
 const createTaskDB = async (task, user_id) => {
   const client = await pool.connect();
   try {
-    client.query('BEGIN');
+    await client.query('BEGIN');
     const queryText = 'INSERT INTO tasks(task,user_id) values($1,$2) returning *';
     const { rows } = await client.query(queryText, [task, user_id]);
     await client.query('COMMIT');
